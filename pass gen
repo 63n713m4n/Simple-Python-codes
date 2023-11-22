@@ -1,0 +1,71 @@
+import random
+import string
+
+def generate_password(length):
+    """Generate a random password of given length"""
+    characters = string.ascii_letters + string.digits + string.punctuation
+    password = ''.join(random.choice(characters) for _ in range(length))
+    return password
+print ("created by 63n713m4n")
+
+def display_menu():
+    print("Choose an Option:")
+    print("1. Generate Password")
+    print("2. Display Created  Passwords")
+    print("3. Save Passwords to a File")
+    print("4. Exit")
+
+welcome_message = """ 
+                                                                        
+                                                                        
+ #######  #######  #######  #######           #######  #######  #     # 
+ #     #  #     #  #        #                 #        #        ##    # 
+ #######  #######  #######  #######           #  ####  ####     # ### # 
+ #        #     #        #        #           #     #  #        #    ## 
+ #        #     #  #######  #######           #######  #######  #     # 
+                                                                        
+
+"""
+# Main program
+passwords = []  # List to store generated passwords
+
+while True:
+    display_menu()
+    choice = input("Enter the number of your choice: ")
+
+    if choice == '1':
+        char_limit = int(input("How many characters you need in this password: "))
+        if char_limit < 8:
+            print("Choose a character limit of 8 or more for a secure password.")
+            continue  # Restart the loop to get a valid input
+        password = generate_password(char_limit)
+        passwords.append(password)  # Add the generated password to the list
+        print("Password generated.")
+    elif choice == '2':
+        try:
+            if passwords:
+                print("Generated passwords:")
+                for i, password in enumerate(passwords, 1):
+                    print(f"{i}. {password}")
+            else:
+                print("No passwords generated yet.")
+        except NameError:
+            print("Please generate a password first (Option 1).")
+    elif choice == '3':
+        try:
+            if passwords:
+                file_path = input("Enter the file path where you want to save the output: ")
+                with open(file_path, 'w') as f:
+                    f.write("Generated passwords:\n")
+                    for password in passwords:
+                        f.write(password + '\n')
+                print("Output saved to", file_path)
+            else:
+                print("No passwords generated yet.")
+        except NameError:
+            print("Please generate a password first (Option 1).")
+    elif choice == '4':
+        print("Exiting the Password Generator program. Goodbye!")
+        break
+    else:
+        print("Invalid choice. Please enter a number between 1 and 4.")
